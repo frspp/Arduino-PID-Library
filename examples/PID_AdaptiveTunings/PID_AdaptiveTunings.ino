@@ -26,11 +26,11 @@ PID myPID(&Input, &Output, &Setpoint, consKp, consKi, consKd, DIRECT);
 
 void setup()
 {
-  //initialize the variables we're linked to
+  //Initialize the variables we're linked to
   Input = analogRead(PIN_INPUT);
   Setpoint = 100;
 
-  //turn the PID on
+  //Turn the PID on
   myPID.SetMode(AUTOMATIC);
 }
 
@@ -38,14 +38,14 @@ void loop()
 {
   Input = analogRead(PIN_INPUT);
 
-  double gap = abs(Setpoint-Input); //distance away from setpoint
-  if (gap < 10)
-  {  //we're close to setpoint, use conservative tuning parameters
+  double gap = abs(Setpoint-Input); //Distance away from setpoint
+  if (gap < 10) //Adjust the number to fit your needs. Especially if you are using SetOutputLimits(). Default 10, while min:0 and max:255. 
+  {  //We're close to setpoint, use conservative tuning parameters
     myPID.SetTunings(consKp, consKi, consKd);
   }
   else
   {
-     //we're far from setpoint, use aggressive tuning parameters
+     //We're far from setpoint, use aggressive tuning parameters
      myPID.SetTunings(aggKp, aggKi, aggKd);
   }
 
